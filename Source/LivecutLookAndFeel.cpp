@@ -1,18 +1,18 @@
 /*
- This file is part of AnalogDelay
+ This file is part of Livecut
  Copyright 2003 by Remy Muller.
  
- AnalogDelay can be redistributed and/or modified under the terms of the
+ Livecut can be redistributed and/or modified under the terms of the
  GNU General Public License, as published by the Free Software Foundation;
  either version 2 of the License, or (at your option) any later version.
  
- AnalogDelay is distributed in the hope that it will be useful,
+ Livecut is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
  
  You should have received a copy of the GNU General Public License
- along with AnalogDelay; if not, visit www.gnu.org/licenses or write to the
+ along with Livecut; if not, visit www.gnu.org/licenses or write to the
  Free Software Foundation, Inc., 59 Temple Place, Suite 330, 
  Boston, MA 02111-1307 USA
  */
@@ -261,7 +261,7 @@ void LivecutLookAndFeel::drawLinearSlider (Graphics& g,
                                            const Slider::SliderStyle style,
                                            Slider& slider)
 {
-  LookAndFeel::drawLinearSlider(g,x,y,width,height,sliderPos,minSliderPos, maxSliderPos, style, slider);
+  LookAndFeel_V3::drawLinearSlider(g,x,y,width,height,sliderPos,minSliderPos, maxSliderPos, style, slider);
 }
 
 void LivecutLookAndFeel::drawLinearSliderBackground (Graphics& g,
@@ -407,7 +407,7 @@ void LivecutLookAndFeel::drawLinearSliderThumb(Graphics& g,
   }
   else
   {
-    LookAndFeel::drawLinearSliderThumb(g,x,y,width,height, sliderPos, minSliderPos, maxSliderPos, style, slider);
+    LookAndFeel_V3::drawLinearSliderThumb(g,x,y,width,height, sliderPos, minSliderPos, maxSliderPos, style, slider);
   }
 }
 

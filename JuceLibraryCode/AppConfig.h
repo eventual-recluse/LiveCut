@@ -140,7 +140,7 @@
  #define JucePlugin_Manufacturer           "Mdsp @ Smartelectronix"
 #endif
 #ifndef  JucePlugin_ManufacturerWebsite
- #define JucePlugin_ManufacturerWebsite    ""
+ #define JucePlugin_ManufacturerWebsite    "http://mdsp.smartelectronix.com/"
 #endif
 #ifndef  JucePlugin_ManufacturerEmail
  #define JucePlugin_ManufacturerEmail      ""
