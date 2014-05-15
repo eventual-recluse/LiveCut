@@ -17,8 +17,8 @@
  Boston, MA 02111-1307 USA
  */
 
-#ifndef BIT_CRUSHER_H
-#define BIT_CRUSHER_H
+#ifndef LIVECUT_BIT_CRUSHER_H
+#define LIVECUT_BIT_CRUSHER_H
 
 /*
 	BBCut MultiFX:
@@ -34,53 +34,21 @@
 
 class BitCrusher : public BBCutListener
 {
-	float minbits,maxbits,startbits,endbits;
-	float multiplier,divider;
-
-	float minfreq,maxfreq,startfreq,endfreq;
-	float sr;
-	float lag,count;
-	float memory1,memory2;
-
-	bool on;
 public:
-	BitCrusher()
-	:minbits(32),maxbits(32),startbits(32),endbits(32)
-	,multiplier(pow(2.f,32.f)),divider(pow(2.f,-32.f))
-	,minfreq(44100),maxfreq(44100),startfreq(44100),endfreq(44100)
-	,sr(44100)
-	,lag(1.f)
-	,count(0.f)
-	,memory1(0.f),memory2(0.f)
-	,on(true)
-	{}
-	virtual void OnBlock(long bar, long sd)
-	{
-		startbits = Math::randomfloat(minbits,maxbits);
-		endbits = Math::randomfloat(minbits,maxbits);
+	BitCrusher();
+	virtual void OnBlock(long bar, long sd);
+	virtual void OnCut(long cut, long numcuts);
+  
+	void SetMinBits(float v);
+	void SetMaxBits(float v);
 
-		startfreq = Math::randomfloat(minfreq,maxfreq);
-		endfreq = Math::randomfloat(minfreq,maxfreq);
-	}
-	virtual void OnCut(long cut, long numcuts)
-	{
-		float bits = startbits + (float(cut)/float(numcuts))*endbits;
-		multiplier = pow(2.f,bits);
-		divider = 1.f/multiplier;
-
-		float freq = startfreq + (float(cut)/float(numcuts))*endfreq;
-		lag = sr/freq;
-	}
-	// 0 - 32
-	void SetMinBits(float v){minbits = v;}
-	void SetMaxBits(float v){maxbits = v;}
-
-	void SetMinFreqFromNormalized(float v){minfreq = v*sr;}
-	void SetMaxFreqFromNormalized(float v){maxfreq = v*sr;}
-	void SetMinFreq(float v){minfreq = v;}
-	void SetMaxFreq(float v){maxfreq = v;}
-	void SetSampleRate(float v){sr = v;}
-	void SetOn(bool v){on = v;}
+	void SetMinFreqFromNormalized(float v);
+	void SetMaxFreqFromNormalized(float v);
+	void SetMinFreq(float v);
+	void SetMaxFreq(float v);
+	void SetSampleRate(float v);
+	void SetOn(bool v);
+  
 	inline void tick(float &out1,float &out2, const float in1, const float in2)
 	{
 		if(on)
@@ -104,6 +72,15 @@ public:
 			out2 = in2;
 		}
 	}
+  
+private:
+	float minbits,maxbits,startbits,endbits;
+	float multiplier,divider;
+	float minfreq,maxfreq,startfreq,endfreq;
+	float sr;
+	float lag,count;
+	float memory1,memory2;
+	bool on;
 };
 
 #endif

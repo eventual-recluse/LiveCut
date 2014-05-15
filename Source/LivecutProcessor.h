@@ -17,8 +17,8 @@
  Boston, MA 02111-1307 USA
  */
 
-#ifndef __PLUGINPROCESSOR_H_8A12CEC8__
-#define __PLUGINPROCESSOR_H_8A12CEC8__
+#ifndef LIVECUT_PROCESSOR_H
+#define LIVECUT_PROCESSOR_H
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "BBCutter.h"
@@ -93,4 +93,4 @@ private:
 	BBCutter bbcutter;
 };
 
-#endif  // __PLUGINPROCESSOR_H_8A12CEC8__
+#endif  

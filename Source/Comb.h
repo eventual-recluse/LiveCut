@@ -17,8 +17,8 @@
  Boston, MA 02111-1307 USA
  */
 
-#ifndef COMB_H
-#define COMB_H
+#ifndef LIVECUT_COMB_H
+#define LIVECUT_COMB_H
 
 #include "BBCutter.h"
 #include "DelayLine.h"
@@ -31,54 +31,30 @@ inline float clip(float x)
 
 class Comb : public BBCutListener
 {
-	float mindelay,maxdelay,startdelay,enddelay;//ms
-	DelayLine dl1,dl2;
-	float sr;
-	float feedback;
-	float delay;
-	FirstOrderLowpass lp;
-	bool on;
-	long type;
 public:
-	Comb()
-	:mindelay(50),maxdelay(50),startdelay(50),enddelay(50)
-	,feedback(0.5)
-	,type(0) //feedforward
-	,sr(44100)
-	,delay(2205)
-	,dl1(2205,44100),dl2(2205,44100) // 50 ms
-	,on(true)
-	{
-		lp.SetSampleRate(44100);
-		lp.SetTimeConstant(40.f); //40 ms
-		lp.SetState(50.f);
-	}
-	virtual void OnBlock(long bar, long sd)
-	{
-		startdelay = Math::randomfloat(mindelay,maxdelay);
-		enddelay = Math::randomfloat(mindelay,maxdelay);
-	}
-	virtual void OnCut(long cut, long numcuts)
-	{
-		delay = (startdelay + (float(cut)/float(numcuts))*enddelay)*sr/1000.f;
-		if(type==0) // feedforward
-		{
-			dl1.set_delay(delay);
-			dl2.set_delay(delay);
-		}
-	}
-	void SetMinDelay(float v){mindelay = v;}
-	void SetMaxDelay(float v){maxdelay = v;}
-	void SetType(long v){type = v;}
-	void SetFeedBack(float v){feedback = v;}
-
-	void SetSampleRate(float v){sr = v; lp.SetSampleRate(v);}
-	void SetOn(bool v){on = v;}
+  enum Type
+  {
+    FeedForward=0,
+    FeedBack
+  };
+  
+	Comb();
+  
+	virtual void OnBlock(long bar, long sd);
+	virtual void OnCut(long cut, long numcuts);
+  
+	void SetMinDelay(float v);
+	void SetMaxDelay(float v);
+	void SetType(long v);
+	void SetFeedBack(float v);
+	void SetSampleRate(float v);
+	void SetOn(bool v);
+  
 	inline void tick(float &out1,float &out2, const float in1, const float in2)
 	{
 		if(on)
 		{
-			if(type==0) // feedforward
+			if(type==FeedForward) // feedforward
 			{
 				out1 = 0.5f*(in1+dl1.tick(in1)); 
 				out2 = 0.5f*(in2+dl2.tick(in2));
@@ -101,6 +77,15 @@ public:
 			out2 = in2;
 		}
 	}
+private:
+	float mindelay,maxdelay,startdelay,enddelay;//ms
+	DelayLine dl1,dl2;
+	float sr;
+	float feedback;
+	float delay;
+	FirstOrderLowpass lp;
+	bool on;
+	long type;
 };
 
 #endif

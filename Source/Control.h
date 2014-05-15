@@ -17,8 +17,8 @@
  Boston, MA 02111-1307 USA
  */
 
-#ifndef CONTROL_H
-#define CONTROL_H
+#ifndef LIVECUT_CONTROL_H
+#define LIVECUT_CONTROL_H
 
 #include "../JuceLibraryCode/JuceHeader.h"
 

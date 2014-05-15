@@ -13,43 +13,34 @@
  
  You should have received a copy of the GNU General Public License
  along with Livecut; if not, visit www.gnu.org/licenses or write to the
- Free Software Foundation, Inc., 59 Temple Place, Suite 330, 
+ Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  Boston, MA 02111-1307 USA
  */
 
-#ifndef SQUARE_PUSHER_AMP_H
-#define SQUARE_PUSHER_AMP_H
+#include "SQPAmp.h"
 
-#include "BBCutter.h"
-
-class SQPAmp : public BBCutListener
+SQPAmp::SQPAmp()
+: on(true)
+, amp(1.f)
 {
-public:
-	SQPAmp();
-  
-	void OnSemiQuaver(long semi);
-	void SetOn(bool v);
-  
-	inline void tick(float &out1,
-                   float &out2, 
-                   const float in1, 
-                   const float in2)
-	{
-		if(on)
-		{
-			out1 = amp*in1;
-			out2 = amp*in2;
-		} 
-		else
-		{
-			out1 = in1;
-			out2 = in2;
-		}
-	}
+}
 
-private:
-	bool on;
-	float amp;
-};
+void SQPAmp::OnSemiQuaver(long semi)
+{
+  // proba of amp=1 on semiquaver
+  static double amptemplate[]=
+  {
+    1.0,  0,    0.09, 0.06,
+    0.24, 0.03, 0.15, 0.06,
+    0.21, 0.03, 0.12, 0.09,
+    0.24, 0.21, 0.18, 0.21
+  };
+  const float random = Math::randomfloat(0.0,1.0);
+  const float proba = amptemplate[semi];
+  amp = (random<proba)? 0.f : 1.f;
+}
 
-#endif
+void SQPAmp::SetOn(bool v)
+{
+  on = v;
+}

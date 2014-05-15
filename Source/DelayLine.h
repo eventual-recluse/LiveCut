@@ -34,42 +34,12 @@ inline float linear_interpolation(const float* data, unsigned long mask, float p
 class DelayLine
 {
 public:
-  DelayLine(float delay=22050, long size=44100)
-  {
-		int n = int(floor (log(double(size))/log(2.0) + 0.5))+1;
-    mMask = 1 ; mMask <<= n; mMask -= 1;
-    mSize = mMask+1;
-    mpBuffer = NULL;
-    mpBuffer = new float[mSize];
-    mDelay = delay;
-    mWriteIndex = 0;
-    clear();
-  }
+  DelayLine(float delay=22050, long size=44100);
+  ~DelayLine();
   
-  virtual ~DelayLine() 
-	{
-		if(NULL != mpBuffer) 
-			delete[] mpBuffer; 
-		mpBuffer = NULL;
-	}
+	void resize(int size);
   
-	void resize(int size)
-	{
-		int n = int(floor (log(double(size))/log(2.0) + 0.5))+1;
-		// when N is a multiple of 2 we choose the next power of 2...
-		// not good... cf OLA ou FFTFactory
-    mMask = 1 ; mMask <<= n; mMask -= 1;
-    mSize = mMask+1;
-		if(NULL != mpBuffer) 
-			delete[] mpBuffer; 
-		mpBuffer = NULL;
-    mpBuffer = new float[mSize];
-    mWriteIndex = 0;
-    clear();
-	}
-  
-  
-  inline void set_delay(float delay) {mDelay = delay;}
+  void set_delay(float delay);
   
   inline float tick(const float x)
 	{
@@ -79,50 +49,9 @@ public:
 		return (mLastOut = linear_interpolation(mpBuffer,mMask,pos));
 	}
 	
-  inline void replace(const float x[],int pos,int size) 
-	{
-		int p = (mWriteIndex+pos); p &= mMask;
-		int n = mSize-p;	  
-		if(n>size)
-			n = size ;
-		else 
-			n = n;
-    
-		float *dest = mpBuffer+p;
-		int i=0;
-		for(;i<n;i++)	 
-		{
-			dest[i]   = x[i];
-		}
-		dest = mpBuffer;
-		for(;i<size;i++) 
-		{
-			dest[i-n] = x[i];
-		}
-	}
-  
-	inline void write(const float x[],int pos,int size) 
-	{
-		int p = (mWriteIndex+pos); p &= mMask;
-		int n = mSize-p;	  
-		if(n>size)
-			n = size ;
-		else 
-			n = n;
-    
-		float *dest = mpBuffer+p;
-		int i=0;
-		for(;i<n;i++)	 
-		{
-			dest[i]   += x[i];
-		}
-		dest = mpBuffer;
-		for(;i<size;i++) 
-		{
-			dest[i-n] += x[i];
-		}
-	}
-  
+  void replace(const float x[],int pos,int size);
+	void write(const float x[],int pos,int size);
+
   inline void write(const float x)
 	{
 		mpBuffer[mWriteIndex] = x;
@@ -155,32 +84,10 @@ public:
 		return tmp;
 	}
   
-  inline void read(float dest[],int pos,int size)
-	{
-		int p = (mWriteIndex+(pos+mSize)); 
-		p    &= mMask;	
-		int n = mSize-p;
-    
-		if(size<n)
-		{
-			memcpy(dest,mpBuffer+p,size*sizeof(float));
-		}
-		else
-		{
-			memcpy(dest,mpBuffer+p,n*sizeof(float));
-			memcpy(dest,mpBuffer,(size-n)*sizeof(float));
-		}
-	}
+  void read(float dest[],int pos,int size);
   
-  void clear()
-	{
-		for(int i=0;i<mSize;i++) 
-		{
-			mpBuffer[i] = 0.0f;
-		}
-		mLastOut=0.0f;
-	}
-	
+  void clear();
+  
   float* get_ptr(int pos=0)	{return &(mpBuffer[(mWriteIndex+pos)&mMask]);}
   
   inline float lastOut()  {return mLastOut;}

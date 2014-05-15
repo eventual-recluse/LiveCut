@@ -21,6 +21,8 @@
 #include "LivecutEditor.h"
 #include "Functor.h"
 
+using std::mem_fun;
+
 LivecutAudioProcessor::LivecutAudioProcessor()
 : bbcutter(player)
 {
@@ -32,7 +34,7 @@ LivecutAudioProcessor::LivecutAudioProcessor()
             .AddEntry("WarpCut")
             .AddEntry("SQPusher")
             .name("CutProc").tag(0).cc(64)
-            .functor( newfun(bind1st(mem_fun(&BBCutter::SetCutProc),&bbcutter)) ) 
+            .functor( newfun(bind1st(mem_fun(&BBCutter::SetCutProc),&bbcutter)) )
             );
 	AddParameter(subdiv
             .AddEntry(6)

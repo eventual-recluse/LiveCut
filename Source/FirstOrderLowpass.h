@@ -23,16 +23,9 @@
 class FirstOrderLowpass
 {
 public:
-	FirstOrderLowpass()
-	: lambda(0)
-	, sr(0)
-	, lastout(0)
-	{
-	}
-  
-	~FirstOrderLowpass() 
-  {
-  }
+	FirstOrderLowpass();
+	
+	~FirstOrderLowpass();
   
 	inline float tick(float x)
 	{
@@ -47,22 +40,9 @@ public:
     return lastout;
   }
 	
-  void SetTimeConstant(float t) 
-  {
-    time = t; 
-    lambda = exp(log(1.0-0.66)/(0.001*time*sr));
-  }
-	
-  void SetSampleRate(float samplerate) 
-  {
-    sr = samplerate; 
-    SetTimeConstant(time);
-  }
-	
-  void clear() 
-  {
-    lastout = 0.0f;
-  }
+  void SetTimeConstant(float t);
+  void SetSampleRate(float samplerate);
+  void clear();
 	
   inline void add_white_noise (float &val)
 	{
@@ -72,10 +52,7 @@ public:
     val += *reinterpret_cast <const float *> (&flt_rnd);
 	}
 	
-  inline void SetState(float v)
-  {
-    lastout=v;
-  }
+  void SetState(float v);
   
 protected:
 	float lambda;

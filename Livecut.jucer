@@ -16,8 +16,11 @@
       <FILE id="zWt36Y" name="Control.cpp" compile="1" resource="0" file="Source/Control.cpp"/>
       <FILE id="QonFwu" name="Control.h" compile="0" resource="0" file="Source/Control.h"/>
       <FILE id="LfLOrJ" name="BBCutter.h" compile="0" resource="0" file="Source/BBCutter.h"/>
+      <FILE id="B6Jnhc" name="BBCutter.cpp" compile="1" resource="0" file="Source/BBCutter.cpp"/>
       <FILE id="OYdczW" name="BitCrusher.h" compile="0" resource="0" file="Source/BitCrusher.h"/>
+      <FILE id="aJ5WHD" name="BitCrusher.cpp" compile="1" resource="0" file="Source/BitCrusher.cpp"/>
       <FILE id="c6RVoT" name="Comb.h" compile="0" resource="0" file="Source/Comb.h"/>
+      <FILE id="EAKtEM" name="Comb.cpp" compile="1" resource="0" file="Source/Comb.cpp"/>
       <FILE id="BJzekq" name="Functor.h" compile="0" resource="0" file="Source/Functor.h"/>
       <FILE id="g2DSq6" name="LivecutEditor.cpp" compile="1" resource="0"
             file="Source/LivecutEditor.cpp"/>
@@ -27,13 +30,17 @@
       <FILE id="pTexkK" name="LivecutProcessor.h" compile="0" resource="0"
             file="Source/LivecutProcessor.h"/>
       <FILE id="MGj0uv" name="SQPAmp.h" compile="0" resource="0" file="Source/SQPAmp.h"/>
+      <FILE id="lOrbpS" name="SQPAmp.cpp" compile="1" resource="0" file="Source/SQPAmp.cpp"/>
       <FILE id="eqqpbO" name="DelayLine.h" compile="0" resource="0" file="Source/DelayLine.h"/>
+      <FILE id="LDHRFH" name="DelayLine.cpp" compile="1" resource="0" file="Source/DelayLine.cpp"/>
       <FILE id="AJDHzT" name="LivecutLookAndFeel.cpp" compile="1" resource="0"
             file="Source/LivecutLookAndFeel.cpp"/>
       <FILE id="rAhgQV" name="LivecutLookAndFeel.h" compile="0" resource="0"
             file="Source/LivecutLookAndFeel.h"/>
       <FILE id="r9IADi" name="FirstOrderLowpass.h" compile="0" resource="0"
             file="Source/FirstOrderLowpass.h"/>
+      <FILE id="V88dMf" name="FirstOrderLowpass.cpp" compile="1" resource="0"
+            file="Source/FirstOrderLowpass.cpp"/>
       <FILE id="VSYT6A" name="Params.cpp" compile="1" resource="0" file="Source/Params.cpp"/>
       <FILE id="TIuLgW" name="Params.h" compile="0" resource="0" file="Source/Params.h"/>
       <FILE id="aEzIaY" name="ParamButton.cpp" compile="1" resource="0" file="Source/ParamButton.cpp"/>

@@ -17,8 +17,8 @@
  Boston, MA 02111-1307 USA
  */
 
-#ifndef __PLUGINEDITOR_H_F9B640EB__
-#define __PLUGINEDITOR_H_F9B640EB__
+#ifndef LIVECUT_EDITOR_H
+#define LIVECUT_EDITOR_H
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "LivecutProcessor.h"
@@ -51,4 +51,4 @@ private:
 };
 
 
-#endif  // __PLUGINEDITOR_H_F9B640EB__
+#endif  

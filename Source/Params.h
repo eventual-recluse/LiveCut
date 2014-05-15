@@ -13,8 +13,14 @@
  
  You should have received a copy of the GNU General Public License
  along with Livecut; if not, visit www.gnu.org/licenses or write to the
- Free Software Foundation, Inc., 59 Temple Place, Suite 330, 
+ Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  Boston, MA 02111-1307 USA
+ */
+
+/**
+ DICLAIMER: 
+ this is a badly designed parameter system.
+ It is only left here for legacy purpose
  */
 
 #if ! defined (Params_HEADER_INCLUDED)
@@ -27,6 +33,7 @@
 #include <vector>
 #include <sstream>
 #include <cassert>
+
 using std::string;
 using std::unary_function;
 
@@ -74,7 +81,7 @@ struct Atom
       case TYPEFLOAT:		return float(u.f);
       case TYPELONG:		return float(u.i);
       case TYPEBOOL:		return float(u.b);
-      case TYPEUNKNOWN:	
+      case TYPEUNKNOWN:
       default:
         return float(0.f);
 		}
@@ -158,13 +165,17 @@ class Param : public IParam
 	virtual float	GetNormalized(Atom v);
 public:
 	Param()
-  :m_name(""), m_unit(""), m_description("")
-  ,m_tag(0), m_cc(-1), m_style(0)
-  ,dirty(false)	
+  : m_name("")
+  , m_unit("")
+  , m_description("")
+  , m_tag(0)
+  , m_cc(-1)
+  , m_style(0)
+  , dirty(false)
 	{
     fun.f = NULL;
   }
-
+  
 	Param (ParamList &list,float min,float def,float max,string name,string unit,long tag_, char cc_,Fun<float> *f=0)
 	{
 		fun.f=f;
@@ -183,7 +194,26 @@ public:
 		init(list,def,name,unit,tag_,cc_);
 	}
 	
-  virtual	~Param (){}
+  virtual	~Param ()
+  {
+    if(fun.b != NULL)
+    {
+      switch (value.GetType())
+      {
+        case TYPEBOOL:
+          delete fun.b;
+          break;
+        case TYPELONG:
+          delete fun.i;
+          break;
+        case TYPEFLOAT:
+          delete fun.f;
+          break;
+        default:
+          break;
+      }
+    }
+  }
 	
   virtual void	init (ParamList &list,float min,float def,float max,string name,string unit,long tag_, char cc_,Fun<float> *f=0);
 	
@@ -209,16 +239,16 @@ public:
   virtual string  description() {return m_description;}
   virtual long    style(){return m_style;}
   
-  virtual string	GetDisplay(); 
-	virtual void	FromDisplay(string s); 
+  virtual string	GetDisplay();
+	virtual void	FromDisplay(string s);
 	virtual string	GetName()	{return m_name;}
 	virtual string	GetUnit()	{return m_unit;}
 	virtual void	SetValue(Atom &a) {value = a; Clip(); TellListeners();}
 	virtual void	SetValueFromFloat(float v) {value.FromFloat(v); Clip(); TellListeners();}
-	virtual Atom	GetValue()	{return value;} 
-	virtual Atom	GetMin() {return min;} 
-	virtual Atom	GetDefault() {return m_def;} 
-	virtual Atom	GetMax() {return max;} 
+	virtual Atom	GetValue()	{return value;}
+	virtual Atom	GetMin() {return min;}
+	virtual Atom	GetDefault() {return m_def;}
+	virtual Atom	GetMax() {return max;}
 	virtual float	GetNormalized();
 	virtual float	GetMinNormalized();
 	virtual float	GetDefaultNormalized();
@@ -226,13 +256,13 @@ public:
 	virtual long	GetTag() {return m_tag;}
 	virtual char	GetCC() {return m_cc;}
 	virtual Type	GetType(){return value.GetType();}
-	virtual void	SetFromNormalized(float norm); 
+	virtual void	SetFromNormalized(float norm);
 	virtual void	SetDirty(bool dirty_) {dirty = dirty_;}
 	virtual bool	IsDirty(){return dirty;}
 	virtual string	toString();
 	virtual void	fromString(string s);
-	virtual float	GetFloatValue() {return float(value);} 
-	virtual long	GetIntValue()  {return long(value);} 
+	virtual float	GetFloatValue() {return float(value);}
+	virtual long	GetIntValue()  {return long(value);}
 	virtual bool	GetBoolValue() {return bool(value);}
 	virtual void	SetFunctor(Fun<float> *f){fun.f = f;}
 	virtual void	SetFunctor(Fun<long> *f){fun.i = f;}
@@ -249,7 +279,7 @@ protected:
 	string	m_unit;
   string  m_description;
   long    m_style;
-	long	m_tag;    
+	long	m_tag;
 	char	m_cc;
 	bool  dirty;
 	union {
@@ -264,7 +294,7 @@ class ParamMap : public std::map<long,Param *>
 public:
   ParamMap& add(Param &param)
   {
-    if( count(param.GetTag()) ) 
+    if( count(param.GetTag()) )
     {
       long newtag = rbegin()->second->GetTag() + 1;
       param.tag(newtag);
@@ -288,7 +318,7 @@ class Freq : public Param
 public:
   Freq (ParamList &list,float min,float def,float max,string name,long tag_, char cc_,Fun<float> *f=0): Param(list,min,def,max,name,"Hz",tag_,cc_,f) {}
 	virtual float	GetNormalized() {return (log10(float(value))-log10(float(min)))/(log10(float(max))-log10(float(min)));}
-	virtual void    SetFromNormalized(float norm) {value = pow(10.0f,log10(float(min))+norm*(log10(float(max))-log10(float(min))));} 
+	virtual void    SetFromNormalized(float norm) {value = pow(10.0f,log10(float(min))+norm*(log10(float(max))-log10(float(min))));}
 };	// class Freq
 
 class OnOffParam : public Param
@@ -296,13 +326,13 @@ class OnOffParam : public Param
 public:
   OnOffParam(ParamList &list,bool def,string name,long tag_,char cc_,Fun<bool> *f=0): Param(list,def,name,"",tag_,cc_,f) {}
   
-	virtual string GetDisplay() 
+	virtual string GetDisplay()
 	{
 		if(bool(value) == true)
 			return string("On");
 		else
 			return string("Off");
-	} 
+	}
 };
 
 class EnumParam : public Param
@@ -325,7 +355,7 @@ public:
 		fromString(s);
 	}
 	virtual void fromString(string s)
-  {	
+  {
     //find the index of the value in the array
     long index=0;
     while(index<names.size())
@@ -339,24 +369,24 @@ public:
     if(index >= names.size())
       index = 0;
     
-    value.u.i = index;	
+    value.u.i = index;
     Clip();
     this->TellListeners();
   }
 	virtual string toString ()
 	{
 		return GetDisplay();
-	}	
+	}
 	
-	void AddNames(std::vector<string> &v) 
+	void AddNames(std::vector<string> &v)
 	{
-		for(unsigned int i=0;i<v.size();i++) 
-      names.push_back(v[i]); 
+		for(unsigned int i=0;i<v.size();i++)
+      names.push_back(v[i]);
 		max = long(names.size()-1);
 	}
-	EnumParam& AddEntry(string v) 
+	EnumParam& AddEntry(string v)
 	{
-		names.push_back(v); 
+		names.push_back(v);
 		max = long(names.size()-1);
 		return *this;
 	}
@@ -403,22 +433,22 @@ public:
 			}
 			if(index >= values.size())
 				index = 0;
-			value.u.i = index;	
+			value.u.i = index;
 			Clip();
 			this->TellListeners();
 		}
 	}
-	IntSetParam& AddEntry(long v) 
+	IntSetParam& AddEntry(long v)
 	{
-		values.push_back(v); 
+		values.push_back(v);
 		max = long(values.size()-1);
 		return *this;
-	}	
-	void AddValues(std::vector<long> &v) 
+	}
+	void AddValues(std::vector<long> &v)
 	{
-		values = v; 
+		values = v;
 		max = long(values.size()-1);
-	}	
+	}
 	virtual void SetFromNormalized(float norm)
 	{
 	  value = long(float(long(min))+norm*float(long(max)-long(min))/*+0.5f*/);
@@ -427,13 +457,13 @@ public:
 	}
 	virtual void TellListeners()
   {
-    long v = values[long(value)]; 
+    long v = values[long(value)];
 		fun.i->call(v);
 	}
-  virtual void SetValue(Atom &a) 
+  virtual void SetValue(Atom &a)
   {
-    value = a; 
-    Clip(); 
+    value = a;
+    Clip();
     TellListeners();
   }
 	virtual string GetDisplay ()
@@ -443,13 +473,13 @@ public:
     //		out << std::showpoint;
     //		out.width(10);
     out << values[long(value)];
-		return out.str();	
+		return out.str();
 	}
 	virtual string toString ()
 	{
 		return GetDisplay();
-	}	
-	virtual long GetIntValue() {return values[long(value)];} 
+	}
+	virtual long GetIntValue() {return values[long(value)];}
 };
 
 class FloatSetParam : public Param
@@ -457,7 +487,7 @@ class FloatSetParam : public Param
 	std::vector<float> values;
 public:
 	FloatSetParam()
-	{		
+	{
 		min   = 0L;
 		max   = 0L;
 		m_def = 0L;
@@ -493,44 +523,44 @@ public:
 			}
 			if(index >= values.size())
 				index = 0;
-			value.u.i = index;	
+			value.u.i = index;
 			Clip();
 			this->TellListeners();
 		}
 	}
-	FloatSetParam& AddEntry(float v) 
+	FloatSetParam& AddEntry(float v)
 	{
-		values.push_back(v); 
+		values.push_back(v);
 		max = long(values.size()-1);
 		return *this;
-	}	
-	void AddValues(std::vector<float> &v) 
+	}
+	void AddValues(std::vector<float> &v)
 	{
 		values = v;
 		max = long(values.size()-1);
-	}	
+	}
 	virtual void TellListeners()
 	{
 	  if(fun.f)
 	    fun.f->call(values[long(value)]);
 	}
-  virtual void SetValue(Atom &a) 
+  virtual void SetValue(Atom &a)
   {
-    value = a; 
-    Clip(); 
+    value = a;
+    Clip();
     TellListeners();
   }
 	virtual string GetDisplay ()
 	{
 		std::ostringstream out;
     out << values[long(value)];
-		return out.str();	
+		return out.str();
 	}
 	virtual string toString ()
 	{
 		return GetDisplay();
 	}
-	virtual float GetFloatValue() {return values[long(value)];} 
+	virtual float GetFloatValue() {return values[long(value)];}
 };
 
 class AutoParam : public Param
@@ -550,7 +580,7 @@ public:
 // mapping
 //----------------------------------------------------------------------------------------------------------------
 
-class LinearMapping 
+class LinearMapping
 {
   float y0,y1;
 public:
@@ -564,7 +594,7 @@ public:
   float ToNormalized(float y)  {return (y-y0)/(y1-y0);}
 };
 
-class ExponentialMapping 
+class ExponentialMapping
 {
   float y0,a,b;
 public:
@@ -592,7 +622,7 @@ public:
   }
 };
 
-class PowerMapping 
+class PowerMapping
 {
   float y0,y1,a;
 public:
@@ -606,13 +636,13 @@ public:
     assert(min_<mid_ && mid_<max_);
     y0 = min_;
     y1 = max_;
-    a = log((mid_-min_)/(max_-min_)) / log(0.5f);      
+    a = log((mid_-min_)/(max_-min_)) / log(0.5f);
   }
   float FromNormalized(float x)
   {
     return y0 + (y1-y0)*pow(x,a);
   }
-  float ToNormalized(float y)  
+  float ToNormalized(float y)
   {
     return pow((y-y0)/(y1-y0),1.f/a);
   }
@@ -626,7 +656,7 @@ class ExponentialParam : public Param
 public:
   ExponentialParam (){}
   ExponentialParam (ParamList &list,float min,float def,float mid,float max,string name,long tag_, char cc_,Fun<float> *f=0)
-  : Param(list,min,def,max,name,"Hz",tag_,cc_,f) 
+  : Param(list,min,def,max,name,"Hz",tag_,cc_,f)
   ,mapping(min,mid,max)
   {}
   void	init (ParamList &list,float min,float def,float mid,float max,string name,string unit,long tag_, char cc_,Fun<float> *f=0)
@@ -634,16 +664,16 @@ public:
     Param::init(list,min,def,max,name,unit,tag_,cc_,f);
     mapping.init(min,mid,max);
   }
-  virtual float GetNormalized() 
+  virtual float GetNormalized()
   {
     return mapping.ToNormalized(float(value));
   }
-  virtual void  SetFromNormalized(float norm) 
+  virtual void  SetFromNormalized(float norm)
   {
     value = mapping.FromNormalized(norm);
     Clip();
 	  TellListeners();
-  } 
+  }
 };
 
 class PowerParam : public Param
@@ -652,7 +682,7 @@ class PowerParam : public Param
 public:
   PowerParam (){}
   PowerParam (ParamList &list,float min,float def,float mid,float max,string name,long tag_, char cc_,Fun<float> *f=0)
-  : Param(list,min,def,max,name,"Hz",tag_,cc_,f) 
+  : Param(list,min,def,max,name,"Hz",tag_,cc_,f)
   ,mapping(min,mid,max)
   {}
   virtual void	init (ParamList &list,float min,float def,float mid,float max,string name,string unit,long tag_, char cc_,Fun<float> *f=0)
@@ -664,16 +694,16 @@ public:
   {
     mapping.init(float(min),mid,float(max));
   }
-  virtual float GetNormalized() 
+  virtual float GetNormalized()
   {
     return mapping.ToNormalized(float(value));
   }
-  virtual void  SetFromNormalized(float norm) 
+  virtual void  SetFromNormalized(float norm)
   {
     value = mapping.FromNormalized(norm);
     Clip();
 	  TellListeners();
-  } 
+  }
 };
 
 

@@ -259,13 +259,31 @@
     <ClCompile Include="..\..\Source\Control.cpp">
       <Filter>Livecut\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\BBCutter.cpp">
+      <Filter>Livecut\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\BitCrusher.cpp">
+      <Filter>Livecut\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Comb.cpp">
+      <Filter>Livecut\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\LivecutEditor.cpp">
       <Filter>Livecut\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\LivecutProcessor.cpp">
       <Filter>Livecut\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\SQPAmp.cpp">
+      <Filter>Livecut\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DelayLine.cpp">
+      <Filter>Livecut\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\LivecutLookAndFeel.cpp">
+      <Filter>Livecut\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FirstOrderLowpass.cpp">
       <Filter>Livecut\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Params.cpp">

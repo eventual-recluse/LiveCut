@@ -140,9 +140,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\Control.cpp"/>
+    <ClCompile Include="..\..\Source\BBCutter.cpp"/>
+    <ClCompile Include="..\..\Source\BitCrusher.cpp"/>
+    <ClCompile Include="..\..\Source\Comb.cpp"/>
     <ClCompile Include="..\..\Source\LivecutEditor.cpp"/>
     <ClCompile Include="..\..\Source\LivecutProcessor.cpp"/>
+    <ClCompile Include="..\..\Source\SQPAmp.cpp"/>
+    <ClCompile Include="..\..\Source\DelayLine.cpp"/>
     <ClCompile Include="..\..\Source\LivecutLookAndFeel.cpp"/>
+    <ClCompile Include="..\..\Source\FirstOrderLowpass.cpp"/>
     <ClCompile Include="..\..\Source\Params.cpp"/>
     <ClCompile Include="..\..\Source\ParamButton.cpp"/>
     <ClCompile Include="..\..\Source\ParamSlider.cpp"/>
