@@ -444,10 +444,8 @@ bool LivecutAudioProcessor::hasEditor() const
 AudioProcessorEditor* LivecutAudioProcessor::createEditor()
 {
   /*
-  AutoParam	maxphraselength, minphraselength, stutterchance, stutterarea, straightchance, regularchance, ritardchance, accel, maxrepeats, minrepeats;
-	IntSetParam	subdiv;
-  AutoParam activity, minamp, maxamp, minpan, maxpan, mindetune, maxdetune, dutycycle, filldutycycle, seed, minbits, maxbits, crusherswitch;
-  PowerParam minfreq, maxfreq, fade;
+  AutoParam  crusherswitch;
+  PowerParam fade;
 	AutoParam	combmindelay, combmaxdelay, combfeedback, combswitch, sqpampswitch;
   EnumParam strategy, combtype;
    */
