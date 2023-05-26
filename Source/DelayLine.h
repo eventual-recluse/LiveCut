@@ -20,7 +20,7 @@
 #if !defined(_mDelay_line__)
 #define _mDelay_line__
 
-#include "float_cast.h"
+#include <math.h>
 
 //-------------------------------------------------------
 inline float linear_interpolation(const float* data, unsigned long mask, float pos)
