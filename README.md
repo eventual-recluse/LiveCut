@@ -1,3 +1,70 @@
+# LiveCut
+
+A version of the [Livecut](https://github.com/mdsp/Livecut) beat-slicer audio plugin adapted for the [DISTRHO Plugin Framework](https://github.com/DISTRHO/DPF)
+
+LiveCut uses [Dear ImGui](https://github.com/ocornut/imgui) for the GUI.
+
+![LiveCut](https://raw.githubusercontent.com/eventual-recluse/LiveCut/master/plugins/LiveCut/LiveCut_Screenshot.png "LiveCut")<br/>
+
+# Build instructions
+
+LV2, VST2, VST3 and CLAP plugins, and a JACK standalone app are built by default. Delete the relevant lines beginning with TARGETS += from the Makefile in plugins/LiveCut if you don't want to build them all.
+
+## Build Instructions: Ubuntu
+Install dependencies, clone this repository, enter the cloned repository, clone the required DPF repositories, then make.
+```
+sudo apt-get install build-essential git pkg-config freeglut3-dev
+git clone --recursive https://github.com/eventual-recluse/LiveCut.git
+cd LiveCut
+git clone --recursive https://github.com/DISTRHO/DPF.git dpf
+git clone https://github.com/DISTRHO/DPF-Widgets.git dpf-widgets
+make
+```
+After building, the plugins can be found in the 'bin' folder.
+
+## Build Instructions: Windows 10 64-bit.
+LiveCut can be built using [msys2](https://www.msys2.org/)
+After installing msys2, launch the MingW64 shell and enter the following commands to install dependencies, clone this repository, enter the cloned repository, clone the required DPF repositories, then make.
+```
+pacman -S base-devel git mingw-w64-x86_64-gcc mingw-w64-x86_64-freeglut
+git clone --recursive https://github.com/eventual-recluse/LiveCut.git
+cd LiveCut
+git clone --recursive https://github.com/DISTRHO/DPF.git dpf
+git clone https://github.com/DISTRHO/DPF-Widgets.git dpf-widgets
+make -f Makefile-windows
+```
+After building, the plugins can be found in the 'bin' folder.
+
+## Building on macOS (not tested).
+It should be possible to build on macOS using the Xcode Command Line Tools.
+
+Install Xcode Command Line Tools from the Terminal:
+```
+xcode-select --install
+```
+Then enter the following commands in the Terminal to install dependencies, clone this repository, enter the cloned repository, clone the required DPF repositories, then make.
+```
+git clone --recursive https://github.com/eventual-recluse/LiveCut.git
+cd LiveCut
+git clone --recursive https://github.com/DISTRHO/DPF.git dpf
+git clone https://github.com/DISTRHO/DPF-Widgets.git dpf-widgets
+make
+```
+After building, the plugins can be found in the 'bin' folder.
+
+# Credits
+[Livecut](https://github.com/mdsp/Livecut) by mdsp @ smartelectronix. Livecut Copyright 2004 by Remy Muller. GPL license.
+
+[DISTRHO Plugin Framework.](https://github.com/DISTRHO/DPF) ISC license.
+
+[Dear ImGui.](https://github.com/ocornut/imgui) MIT license.
+
+[Bruno Ace Font](https://fonts.google.com/specimen/Bruno+Ace) designed by Astigmatic. [Open Font License.](https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL)
+
+[Bruno Ace SC Font](https://fonts.google.com/specimen/Bruno+Ace+SC) designed by Astigmatic. [Open Font License.](https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL)
+
+
+
 Livecut
 =======
 
