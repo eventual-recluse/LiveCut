@@ -27,7 +27,6 @@
 
 START_NAMESPACE_DISTRHO
 
-constexpr int UI_COLUMN_WIDTH = 312;
 // --------------------------------------------------------------------------------------------------------------------
 
 class LiveCutUI : public UI
@@ -47,6 +46,9 @@ class LiveCutUI : public UI
     
     ImFont* brunoAceFont;
     ImFont* brunoAceSCFont;
+    
+    double scale_factor;
+    int UI_COLUMN_WIDTH;
     
     // ----------------------------------------------------------------------------------------------------------------
 
@@ -73,12 +75,18 @@ public:
             ui_control[i] = LVC_DEFAULTS[i];
         }
         
+        // account for scaling
+        scale_factor = getScaleFactor();
+        if (scale_factor == 0) {scale_factor = 1.0;}
+        
+        UI_COLUMN_WIDTH = 312 * scale_factor;
+        
         // Setup fonts
         ImGuiIO& io = ImGui::GetIO();
         io.Fonts->Clear();
         
-        brunoAceFont = AddBrunoAceFont();
-        brunoAceSCFont = AddBrunoAceSCFont();
+        brunoAceFont = AddBrunoAceFont(scale_factor);
+        brunoAceSCFont = AddBrunoAceSCFont(scale_factor);
         
         // Set style and colours
         ImGuiStyle& uistyle = ImGui::GetStyle();
@@ -213,7 +221,7 @@ protected:
 
         if (ImGui::Begin("LiveCut", nullptr, ImGuiWindowFlags_NoResize|ImGuiWindowFlags_NoCollapse|ImGuiWindowFlags_NoTitleBar))
         {
-            ImGui::BeginChild("title pane", ImVec2(0, 38));
+            ImGui::BeginChild("title pane", ImVec2(0, ImGui::GetFontSize() * 3));
             
             ImGui::PushFont(brunoAceSCFont);
             //ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(40,40,40,255));
