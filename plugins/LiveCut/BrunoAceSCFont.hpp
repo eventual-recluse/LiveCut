@@ -361,13 +361,13 @@ static const char BrunoAceSCFont_compressed_data_base85[46040+1] =
     "D6/#GfKYW/XHuY#B%u.#$va^#,BlY#HB5'of_Af+(a)b<_>piLKRlcMGOtV7hm4Z-/SUY:dlor^AA)9/ZPA^+G(EM-B(EAJY)I@H%x7q(n=(SK*Csc<AU>-+]Ks$#dqVM/6A,##]1SfL"
     "hW0DMu=Gx#&)###fTt(M]JN,#6.F6jK=D6jt`/.M6(^fLm>Ju-JkZgL,[s$#-;.?$tFtHZF.[m<<1'6*?CpGP>Z/],t-UN(9`9p7vDpr.+0b$#HgTOJws@##";
 
-static ImFont *AddBrunoAceSCFont()
+static ImFont *AddBrunoAceSCFont(double scale_factor)
 {
     ImFontConfig config;
     config.OversampleH = 1;
     config.OversampleV = 1;
     //config.PixelSnapH = true;
-    config.SizePixels = 32;
+    config.SizePixels = 32 * scale_factor;
     //config.GlyphExtraSpacing.x = 1;
 
     // font name variable
