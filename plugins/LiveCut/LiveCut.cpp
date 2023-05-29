@@ -224,7 +224,7 @@ protected:
         case LVC_FADE:
             parameter.name = "Fade";
             parameter.symbol = "livecut_fade";
-	    parameter.hints |= kParameterIsLogarithmic;
+            parameter.hints |= kParameterIsLogarithmic;
             parameter.ranges.min = controlLimits[index].first;
             parameter.ranges.max = controlLimits[index].second;
             parameter.ranges.def = LVC_DEFAULTS[index];
@@ -760,9 +760,9 @@ private:
     
     // Livecut components
     LivePlayer player;
-	BitCrusher crusher;
-	Comb comb;
-	BBCutter bbcutter;
+    BitCrusher crusher;
+    Comb comb;
+    BBCutter bbcutter;
     
     // Variables used by the run() method which are stored or updated outside of the run() method
     long oldpositionInMeasure;
