@@ -832,7 +832,7 @@ protected:
             }
             
             // LVC_MINDELAY
-            if (ImGui::SliderFloat("Min Delay", &ui_control[LVC_MINDELAY], controlLimits[LVC_MINDELAY].first, controlLimits[LVC_MINDELAY].second, "%.2f ms", ImGuiSliderFlags_NoInput))
+            if (ImGui::SliderFloat("Min Delay", &ui_control[LVC_MINDELAY], controlLimits[LVC_MINDELAY].first, controlLimits[LVC_MINDELAY].second, "%.2f ms", ImGuiSliderFlags_Logarithmic))
             {
                 if (ImGui::IsItemActivated())
                     editParameter(LVC_MINDELAY, true);
@@ -846,7 +846,7 @@ protected:
             }
             
             // LVC_MAXDELAY
-            if (ImGui::SliderFloat("Max Delay", &ui_control[LVC_MAXDELAY], controlLimits[LVC_MAXDELAY].first, controlLimits[LVC_MAXDELAY].second, "%.2f ms", ImGuiSliderFlags_NoInput))
+            if (ImGui::SliderFloat("Max Delay", &ui_control[LVC_MAXDELAY], controlLimits[LVC_MAXDELAY].first, controlLimits[LVC_MAXDELAY].second, "%.2f ms", ImGuiSliderFlags_Logarithmic))
             {
                 if (ImGui::IsItemActivated())
                     editParameter(LVC_MAXDELAY, true);
