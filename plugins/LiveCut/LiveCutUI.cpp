@@ -497,7 +497,7 @@ protected:
             }
             
             // LVC_FADE
-            if (ImGui::SliderFloat("Fade", &ui_control[LVC_FADE], controlLimits[LVC_FADE].first, controlLimits[LVC_FADE].second, "%.2f ms", ImGuiSliderFlags_NoInput))
+            if (ImGui::SliderFloat("Fade", &ui_control[LVC_FADE], controlLimits[LVC_FADE].first, controlLimits[LVC_FADE].second, "%.2f ms", ImGuiSliderFlags_Logarithmic|ImGuiSliderFlags_NoInput))
             {
                 if (ImGui::IsItemActivated())
                     editParameter(LVC_FADE, true);
