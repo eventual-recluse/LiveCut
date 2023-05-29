@@ -224,6 +224,7 @@ protected:
         case LVC_FADE:
             parameter.name = "Fade";
             parameter.symbol = "livecut_fade";
+	    parameter.hints |= kParameterIsLogarithmic;
             parameter.ranges.min = controlLimits[index].first;
             parameter.ranges.max = controlLimits[index].second;
             parameter.ranges.def = LVC_DEFAULTS[index];
