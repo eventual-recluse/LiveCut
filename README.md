@@ -11,43 +11,37 @@ LiveCut uses [Dear ImGui](https://github.com/ocornut/imgui) for the GUI.
 LV2, VST2, VST3 and CLAP plugins, and a JACK standalone app are built by default. Delete the relevant lines beginning with TARGETS += from the Makefile in plugins/LiveCut if you don't want to build them all.
 
 ## Build Instructions: Ubuntu
-Install dependencies, clone this repository, enter the cloned repository, clone the required DPF repositories, then make.
+Install dependencies, clone this repository, enter the cloned repository, then make.
 ```
 sudo apt-get install build-essential git pkg-config freeglut3-dev
 git clone --recursive https://github.com/eventual-recluse/LiveCut.git
 cd LiveCut
-git clone --recursive https://github.com/DISTRHO/DPF.git dpf
-git clone https://github.com/DISTRHO/DPF-Widgets.git dpf-widgets
 make
 ```
 After building, the plugins can be found in the 'bin' folder.
 
 ## Build Instructions: Windows 10 64-bit.
 LiveCut can be built using [msys2](https://www.msys2.org/)
-After installing msys2, launch the MingW64 shell and enter the following commands to install dependencies, clone this repository, enter the cloned repository, clone the required DPF repositories, then make.
+After installing msys2, launch the MinGW64 shell and enter the following commands to install dependencies, clone this repository, enter the cloned repository, then make.
 ```
 pacman -S base-devel git mingw-w64-x86_64-gcc mingw-w64-x86_64-freeglut
 git clone --recursive https://github.com/eventual-recluse/LiveCut.git
 cd LiveCut
-git clone --recursive https://github.com/DISTRHO/DPF.git dpf
-git clone https://github.com/DISTRHO/DPF-Widgets.git dpf-widgets
 make -f Makefile-windows
 ```
 After building, the plugins can be found in the 'bin' folder.
 
-## Building on macOS (not tested).
+## Building on macOS.
 It should be possible to build on macOS using the Xcode Command Line Tools.
 
 Install Xcode Command Line Tools from the Terminal:
 ```
 xcode-select --install
 ```
-Then enter the following commands in the Terminal to install dependencies, clone this repository, enter the cloned repository, clone the required DPF repositories, then make.
+Then enter the following commands in the Terminal to install dependencies, clone this repository, enter the cloned repository, then make.
 ```
 git clone --recursive https://github.com/eventual-recluse/LiveCut.git
 cd LiveCut
-git clone --recursive https://github.com/DISTRHO/DPF.git dpf
-git clone https://github.com/DISTRHO/DPF-Widgets.git dpf-widgets
 make
 ```
 After building, the plugins can be found in the 'bin' folder.
