@@ -247,7 +247,7 @@ protected:
             
             //LVC_CUTPROC
             const char* strategies[3] = { "CutProc11", "WarpCut", "SQPusher"};
-            static const char* current_strategy = strategies[static_cast<int32_t>(ui_control[LVC_CUTPROC])];
+            const char* current_strategy = strategies[static_cast<int32_t>(ui_control[LVC_CUTPROC])];
 
             ImGuiStyle& strat_style = ImGui::GetStyle();
             float strat_w = ImGui::CalcItemWidth();
@@ -375,7 +375,7 @@ protected:
             
             // LVC SUBDIV
             const char* subdivisions[7] = { "6", "8", "12", "16", "18", "24", "32"};
-            static const char* current_sdiv = subdivisions[static_cast<int32_t>(ui_control[LVC_SUBDIV])];
+            const char* current_sdiv = subdivisions[static_cast<int32_t>(ui_control[LVC_SUBDIV])];
 
             ImGuiStyle& sdiv_style = ImGui::GetStyle();
             float sdiv_w = ImGui::CalcItemWidth();
@@ -733,7 +733,7 @@ protected:
             
             // LVC_TYPE
             const char* comb_types[2] = { "FeedForward", "FeedBack"};
-            static const char* current_comb_type = comb_types[static_cast<int32_t>(ui_control[LVC_TYPE])];
+            const char* current_comb_type = comb_types[static_cast<int32_t>(ui_control[LVC_TYPE])];
 
             ImGuiStyle& comb_style = ImGui::GetStyle();
             float comb_w = ImGui::CalcItemWidth();
