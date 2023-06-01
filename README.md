@@ -38,7 +38,7 @@ Install Xcode Command Line Tools from the Terminal:
 ```
 xcode-select --install
 ```
-Then enter the following commands in the Terminal to install dependencies, clone this repository, enter the cloned repository, then make.
+Then enter the following commands in the Terminal to clone this repository, enter the cloned repository, then make.
 ```
 git clone --recursive https://github.com/eventual-recluse/LiveCut.git
 cd LiveCut
