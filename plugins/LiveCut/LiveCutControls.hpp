@@ -99,9 +99,9 @@ static const std::array<std::pair<float, float>, LVC_CONTROL_NR> controlLimits =
     {441.0f, 44100.0f},  // LVC_MAXFREQ
     {0.0f, 1.0f},        // LVC_COMB
     {0.0f, 1.0f},        // LVC_TYPE
-    {0.0f, 0.9f},        // LVC_FEEDBACK
-    {1.0f, 50.0f},       // LVC_MINDELAY
-    {1.0f, 50.0f},       // LVC_MAXDELAY
+    {0.0f, 0.6f},     // LVC_FEEDBACK
+    {0.05f, 10.0f},       // LVC_MINDELAY
+    {0.05f, 10.0f},       // LVC_MAXDELAY
     {1.0f, 16.0f}        // LVC_SEED
 }};
 
@@ -136,7 +136,7 @@ static const float LVC_DEFAULTS[LVC_CONTROL_NR] = {
     0.0f, // LVC_COMB
     0.0f, // LVC_TYPE
     0.5f, // LVC_FEEDBACK
-    10.0f, // LVC_MINDELAY
+    1.0f, // LVC_MINDELAY
     10.0f, //  LVC_MAXDELAY
     1.0f //  LVC_SEED
 };
