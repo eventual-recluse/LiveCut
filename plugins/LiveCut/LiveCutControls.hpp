@@ -108,7 +108,7 @@ static const std::array<std::pair<float, float>, LVC_CONTROL_NR> controlLimits =
 static const float LVC_DEFAULTS[LVC_CONTROL_NR] = {
     0.0f, // LVC_CUTPROC
     1.0f, // LVC_SUBDIV
-    0.0f, // LVC_FADE
+    0.01f, // LVC_FADE
     1.0f, // LVC_MINAMP
     1.0f, // LVC_MAXAMP
     -0.2f, // LVC_MINPAN
