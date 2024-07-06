@@ -64,12 +64,11 @@ public:
     {
          // clear all parameters
         std::memset(control, 0, sizeof(float)*LVC_CONTROL_NR);
-        std::memset(new_control, 0, sizeof(float)*LVC_CONTROL_NR);
         
-        // populate new_control with defaults
+        // populate control with defaults
         for (int32_t i = 0; i < LVC_CONTROL_NR; i++)
         {
-            new_control[i] = LVC_DEFAULTS[i];
+            control[i] = LVC_DEFAULTS[i];
         }
         
         sampleRateChanged(sampleRate);
@@ -477,153 +476,148 @@ protected:
     
     void update_parameter(uint32_t i)
     {
-        if (control[i] != new_control[i])
+        control[i] = limit<float> (control[i], controlLimits[i].first, controlLimits[i].second);
+        
+        switch (i)
         {
-            control[i] = limit<float> (new_control[i], controlLimits[i].first, controlLimits[i].second);
-            // ensure any change is reflected by new_control, in case host requests info from new_control
-            if (control[i] != new_control[i]) {new_control[i] = control[i];}
-            
-            switch (i)
+        case LVC_CUTPROC:
+            bbcutter.SetCutProc(static_cast<long> (control[i]));
+            break;
+
+        case LVC_SUBDIV:
             {
-            case LVC_CUTPROC:
-                bbcutter.SetCutProc(static_cast<long> (control[i]));
-                break;
-
-            case LVC_SUBDIV:
-                {
-                    div = LVC_SUBDIV_OPTIONS[static_cast<long>(control[i])];
-                    bbcutter.SetSubdiv(div);
-                    break;
-                }
-
-            case LVC_FADE:
-                bbcutter.SetFade(control[i]);
-                break;
-
-            case LVC_MINAMP:
-                bbcutter.SetMinAmp(control[i]);
-                break;
-
-            case LVC_MAXAMP:
-                bbcutter.SetMaxAmp(control[i]);
-                break;
-
-            case LVC_MINPAN:
-                bbcutter.SetMinPan(control[i]);
-                break;
-
-            case LVC_MAXPAN:
-                bbcutter.SetMaxPan(control[i]);
-                break;
-
-            case LVC_MINPITCH:
-                bbcutter.SetMinDetune(control[i]);
-                break;
-
-            case LVC_MAXPITCH:
-                bbcutter.SetMaxDetune(control[i]);
-                break;
-
-            case LVC_DUTY:
-                bbcutter.SetDutyCycle(control[i]);
-                break;
-
-            case LVC_FILLDUTY:
-                bbcutter.SetFillDutyCycle(control[i]);
-                break;
-
-            case LVC_MAXPHRS:
-                bbcutter.SetMaxPhraseLength(static_cast<long> (control[i]));
-                break;
-
-            case LVC_MINPHRS:
-                bbcutter.SetMinPhraseLength(static_cast<long> (control[i]));
-                break;
-
-            case LVC_MAXREP:
-                bbcutter.SetMaxRepeats(static_cast<long> (control[i]));
-                break;
-
-            case LVC_MINREP:
-                bbcutter.SetMinRepeats(static_cast<long> (control[i]));
-                break;
-
-            case LVC_STUTTER:
-                bbcutter.SetStutterChance(control[i]);
-                break;
-
-            case LVC_AREA:
-                bbcutter.SetStutterArea(control[i]);
-                break;
-
-            case LVC_STRAIGHT:
-                bbcutter.SetStraightChance(control[i]);
-                break;
-
-            case LVC_REGULAR:
-                bbcutter.SetRegularChance(control[i]);
-                break;
-
-            case LVC_RITARD:
-                bbcutter.SetRitardChance(control[i]);
-                break;
-
-            case LVC_SPEED:
-                bbcutter.SetAccel(control[i]);
-                break;
-
-            case LVC_ACTIVITY:
-                bbcutter.SetActivity(control[i]);
-                break;
-
-            case LVC_CRUSHER:
-                crusher.SetOn(static_cast<bool> (control[i]));
-                break;
-
-            case LVC_MINBITS:
-                crusher.SetMinBits(control[i]);
-                break;
-
-            case LVC_MAXBITS:
-                crusher.SetMaxBits(control[i]);
-                break;
-
-            case LVC_MINFREQ:
-                crusher.SetMinFreq(control[i]);
-                break;
-
-            case LVC_MAXFREQ:
-                crusher.SetMaxFreq(control[i]);
-                break;
-
-            case LVC_COMB:
-                comb.SetOn(static_cast<bool> (control[i]));
-                break;
-
-            case LVC_TYPE:
-                comb.SetType(static_cast<long> (control[i]));
-                break;
-
-            case LVC_FEEDBACK:
-                comb.SetFeedBack(control[i]);
-                break;
-
-            case LVC_MINDELAY:
-                comb.SetMinDelay(control[i]);
-                break;
-
-            case LVC_MAXDELAY:
-                comb.SetMaxDelay(control[i]);
-                break;
-            
-            case LVC_SEED:
-                Math::randomseed(static_cast<long> (control[i]));
-                break;
-                
-                
-            default:
+                div = LVC_SUBDIV_OPTIONS[static_cast<long>(control[i])];
+                bbcutter.SetSubdiv(div);
                 break;
             }
+
+        case LVC_FADE:
+            bbcutter.SetFade(control[i]);
+            break;
+
+        case LVC_MINAMP:
+            bbcutter.SetMinAmp(control[i]);
+            break;
+
+        case LVC_MAXAMP:
+            bbcutter.SetMaxAmp(control[i]);
+            break;
+
+        case LVC_MINPAN:
+            bbcutter.SetMinPan(control[i]);
+            break;
+
+        case LVC_MAXPAN:
+            bbcutter.SetMaxPan(control[i]);
+            break;
+
+        case LVC_MINPITCH:
+            bbcutter.SetMinDetune(control[i]);
+            break;
+
+        case LVC_MAXPITCH:
+            bbcutter.SetMaxDetune(control[i]);
+            break;
+
+        case LVC_DUTY:
+            bbcutter.SetDutyCycle(control[i]);
+            break;
+
+        case LVC_FILLDUTY:
+            bbcutter.SetFillDutyCycle(control[i]);
+            break;
+
+        case LVC_MAXPHRS:
+            bbcutter.SetMaxPhraseLength(static_cast<long> (control[i]));
+            break;
+
+        case LVC_MINPHRS:
+            bbcutter.SetMinPhraseLength(static_cast<long> (control[i]));
+            break;
+
+        case LVC_MAXREP:
+            bbcutter.SetMaxRepeats(static_cast<long> (control[i]));
+            break;
+
+        case LVC_MINREP:
+            bbcutter.SetMinRepeats(static_cast<long> (control[i]));
+            break;
+
+        case LVC_STUTTER:
+            bbcutter.SetStutterChance(control[i]);
+            break;
+
+        case LVC_AREA:
+            bbcutter.SetStutterArea(control[i]);
+            break;
+
+        case LVC_STRAIGHT:
+            bbcutter.SetStraightChance(control[i]);
+            break;
+
+        case LVC_REGULAR:
+            bbcutter.SetRegularChance(control[i]);
+            break;
+
+        case LVC_RITARD:
+            bbcutter.SetRitardChance(control[i]);
+            break;
+
+        case LVC_SPEED:
+            bbcutter.SetAccel(control[i]);
+            break;
+
+        case LVC_ACTIVITY:
+            bbcutter.SetActivity(control[i]);
+            break;
+
+        case LVC_CRUSHER:
+            crusher.SetOn(static_cast<bool> (control[i]));
+            break;
+
+        case LVC_MINBITS:
+            crusher.SetMinBits(control[i]);
+            break;
+
+        case LVC_MAXBITS:
+            crusher.SetMaxBits(control[i]);
+            break;
+
+        case LVC_MINFREQ:
+            crusher.SetMinFreq(control[i]);
+            break;
+
+        case LVC_MAXFREQ:
+            crusher.SetMaxFreq(control[i]);
+            break;
+
+        case LVC_COMB:
+            comb.SetOn(static_cast<bool> (control[i]));
+            break;
+
+        case LVC_TYPE:
+            comb.SetType(static_cast<long> (control[i]));
+            break;
+
+        case LVC_FEEDBACK:
+            comb.SetFeedBack(control[i]);
+            break;
+
+        case LVC_MINDELAY:
+            comb.SetMinDelay(control[i]);
+            break;
+
+        case LVC_MAXDELAY:
+            comb.SetMaxDelay(control[i]);
+            break;
+        
+        case LVC_SEED:
+            Math::randomseed(static_cast<long> (control[i]));
+            break;
+            
+            
+        default:
+            break;
         }
     }
     
@@ -636,7 +630,7 @@ protected:
     float getParameterValue(uint32_t index) const override
     {
         if (index >= LVC_CONTROL_NR) return 0.0f;
-        return new_control[index];
+        return control[index];
     }
 
    /**
@@ -645,7 +639,7 @@ protected:
     void setParameterValue(uint32_t index, float value) override
     {
         if (index >= LVC_CONTROL_NR) return;
-        new_control[index] = value;
+        control[index] = value;
         update_parameter(index);
     }
 
@@ -753,10 +747,7 @@ private:
     float sampleRate;
     
     // Parameters.
-    // Parameter values are added to control[] by the plugin after being checked.
     float control[LVC_CONTROL_NR];
-    // Host adds new parameter values to new_control[] via setParameterValue() method
-    float new_control[LVC_CONTROL_NR];
     
     // Livecut components
     LivePlayer player;
