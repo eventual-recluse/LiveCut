@@ -446,6 +446,7 @@ protected:
         case LVC_MINDELAY:
             parameter.name = "Comb Min Delay";
             parameter.symbol = "livecut_mindelay";
+            parameter.hints |= kParameterIsLogarithmic;
             parameter.ranges.min = controlLimits[index].first;
             parameter.ranges.max = controlLimits[index].second;
             parameter.ranges.def = LVC_DEFAULTS[index];
@@ -454,6 +455,7 @@ protected:
         case LVC_MAXDELAY:
             parameter.name = "Comb Max Delay";
             parameter.symbol = "livecut_maxdelay";
+            parameter.hints |= kParameterIsLogarithmic;
             parameter.ranges.min = controlLimits[index].first;
             parameter.ranges.max = controlLimits[index].second;
             parameter.ranges.def = LVC_DEFAULTS[index];
