@@ -62,7 +62,7 @@ public:
           fResizeHandle(this)
     {
         setGeometryConstraints(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT, true);
-        
+        setWidth(DISTRHO_UI_DEFAULT_WIDTH); // Fix for GUI display issue on mac
         // hide handle if UI is resizable
         if (isResizable())
             fResizeHandle.hide();
