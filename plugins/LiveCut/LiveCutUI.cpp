@@ -61,8 +61,12 @@ public:
         : UI(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT, true),
           fResizeHandle(this)
     {
-        setGeometryConstraints(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT, true);
-        setWidth(DISTRHO_UI_DEFAULT_WIDTH); // Fix for GUI display issue on mac
+        // account for scaling
+        scale_factor = getScaleFactor();
+        if (scale_factor == 0) {scale_factor = 1.0;}
+        
+        setGeometryConstraints(DISTRHO_UI_DEFAULT_WIDTH * scale_factor, DISTRHO_UI_DEFAULT_HEIGHT * scale_factor, true);
+        setWidth(DISTRHO_UI_DEFAULT_WIDTH * scale_factor); // Fix for GUI display issue on mac
         // hide handle if UI is resizable
         if (isResizable())
             fResizeHandle.hide();
@@ -74,10 +78,6 @@ public:
         {
             ui_control[i] = LVC_DEFAULTS[i];
         }
-        
-        // account for scaling
-        scale_factor = getScaleFactor();
-        if (scale_factor == 0) {scale_factor = 1.0;}
         
         UI_COLUMN_WIDTH = 312 * scale_factor;
         
