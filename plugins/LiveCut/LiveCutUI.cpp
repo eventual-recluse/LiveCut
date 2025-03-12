@@ -63,10 +63,19 @@ public:
     {
         // account for scaling
         scale_factor = getScaleFactor();
-        if (scale_factor == 0) {scale_factor = 1.0;}
         
-        setGeometryConstraints(DISTRHO_UI_DEFAULT_WIDTH * scale_factor, DISTRHO_UI_DEFAULT_HEIGHT * scale_factor, true);
-        setWidth(DISTRHO_UI_DEFAULT_WIDTH); // Fix for GUI display issue on mac
+        if (d_isEqual(scale_factor, 1.0))
+        {
+            setGeometryConstraints(DISTRHO_UI_DEFAULT_WIDTH, DISTRHO_UI_DEFAULT_HEIGHT, true);
+        }
+        else
+        {
+            const uint width = DISTRHO_UI_DEFAULT_WIDTH * scale_factor;
+            const uint height = DISTRHO_UI_DEFAULT_HEIGHT * scale_factor;
+            setGeometryConstraints(width, height, true);
+            setSize(width, height);
+        }
+        
         // hide handle if UI is resizable
         if (isResizable())
             fResizeHandle.hide();
